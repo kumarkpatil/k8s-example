@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-env
+spec:
+  containers:
+    - name: busybox-pod-env
+      image: busybox
+      command: ['sh', '-c', 'echo ENV_VAR is $MY_VAR && sleep 60']
+      env:
+        - name: MY_VAR
+          value: "Hello from Envirment"
+  restartPolicy: Never
+    
