@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-config-pod
+spec:
+  containers:
+    - name: busybox-config-pod
+      image: busybox
+      command: ['sh', '-c','echo "Message : $MY_VAR" && sleep 3600']
+      env:
+        - name: MY_VAR
+          valueFrom:
+            configMapKeyRef:
+              name: busybox-config-env 
+              key: MY_VAR
+
+  restartPolicy: Never
