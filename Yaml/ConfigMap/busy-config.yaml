@@ -4,3 +4,6 @@ metadata:
   name: busybox-config-env
 data:
   MY_VAR: From confg map
+  demo: demo
+  key: value
+  kumar: patil
