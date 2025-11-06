@@ -19,6 +19,32 @@ To get the cofigMap as JSON
 
  In order to access configMap env from pods add below line in container section
 
-`envFrom:
+``` 
+envFrom:
         - configMapRef:
-            name: busybox-config-env`
+            name: busybox-config-env
+```
+## Secret
+>kubectl create secret generic my-secret --from-literal=APP_PASSWORD=SuperSecret123
+
+In order to use the secret in POD env, use the below snippest in container section
+
+``` 
+env:
+      - name:  APP_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name:  app-secret
+```
+
+### Load all values from Secret as well as from ConfigMap
+
+```
+envFrom:
+        - configMapRef:
+            name: my-config    # ✅ loads all keys from ConfigMap
+        - secretRef:
+            name: my-secret    # ✅ loads all keys from Secret
+```            
+
+## Deployment
