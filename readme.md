@@ -1,50 +1,81 @@
-# Kubernetes Notes
+# 🧠 Kubernetes Notes
 
-## PODS
->kubectl run pod-name --image=image-name restartPolicy=Never
+---
 
->kubectl get pods
+## 🧩 PODS
 
->kubectl logs pod-name
+```bash
+# Create a Pod
+kubectl run pod-name --image=image-name --restart=Never
 
->kubectl describe pod pod-name
+# Get list of Pods
+kubectl get pods
 
->kubectl exec -it pod-name "sh//bin/bash"
+# View Pod logs
+kubectl logs pod-name
 
-## ConfigMap
+# Describe Pod details
+kubectl describe pod pod-name
+
+# Execute a command inside a Pod
+kubectl exec -it pod-name -- sh   # or /bin/bash
+```
+
+## ⚙️ ConfigMap
+
+### Create a ConfigMap from literal value
 >kubectl create configmap my-config --from-literal=APP_MESSAGE="Hello from ConfigMap"
 
-To get the cofigMap as JSON 
+### Get the ConfigMap in JSON format
 >kubectl get configmap busybox-config-env -o json
 
- In order to access configMap env from pods add below line in container section
+Use ConfigMap inside a Pod (in container section):
 
-``` 
+```bash
 envFrom:
-        - configMapRef:
-            name: busybox-config-env
+  - configMapRef:
+      name: busybox-config-env
 ```
-## Secret
+
+## 🔐 Secret
+### Create a Secret from literal value
 >kubectl create secret generic my-secret --from-literal=APP_PASSWORD=SuperSecret123
 
-In order to use the secret in POD env, use the below snippest in container section
-
-``` 
+Use a Secret in Pod environment variables:
+```bash
 env:
-      - name:  APP_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name:  app-secret
+  - name: APP_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: app-secret
+        key: APP_PASSWORD
 ```
+### Load all values from both ConfigMap and Secret:
 
-### Load all values from Secret as well as from ConfigMap
-
-```
+```bash
 envFrom:
-        - configMapRef:
-            name: my-config    # ✅ loads all keys from ConfigMap
-        - secretRef:
-            name: my-secret    # ✅ loads all keys from Secret
-```            
+  - configMapRef:
+      name: my-config    # ✅ loads all keys from ConfigMap
+  - secretRef:
+      name: my-secret    # ✅ loads all keys from Secret
+```
 
-## Deployment
+## 🚀 Deployment
+### Apply a deployment file (e.g., Nginx deployment)
+
+>kubectl apply -f deployment-health-check.yaml
+
+#### 🔍 Probes
+livenessProbe → Checks if the container is alive.
+🔁 If it fails → Pod is restarted.
+
+readinessProbe → Checks if the container is ready to accept traffic.
+🚫 If it fails → Pod is removed from Service endpoints (no restart).
+
+
+## 🌐 Port Forwarding
+### Expose a container port to local (for accessing from outside cluster)
+>kubectl port-forward pod/pod-name 8080:80   #(Local port : Container port)
+
+
+## PC && VPC
