@@ -18,3 +18,10 @@ spec:
       containers:
       - name: nginx
         image: nginx
+        volumeMounts:
+          - name:  local-pvc
+            mountPath: /var/www/html
+      volumes:
+        - name:  local-pvc
+          persistentVolumeClaim:
+            claimName: mypvc

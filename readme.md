@@ -78,4 +78,29 @@ readinessProbe → Checks if the container is ready to accept traffic.
 >kubectl port-forward pod/pod-name 8080:80   #(Local port : Container port)
 
 
-## PC && VPC
+## Jobs and CronJob
+To execute some logic once or at particular time, we can schedule job or cronJob
+in CronJob : schedule is imp field that need to configured as per requirement.
+
+Note: In Job whatever we add in tempalte that same will be use in cronJob as jobTemplate
+
+
+
+## PV && PVC
+
+PV is used to allocate some storage which can be used in pod to maintain the POD data even after POD deleted
+We are creating PVC means we claim the data that how much we required from PV and mount that PCV to POD
+
+
+## Service 
+In order to access the application from user perspective we can crete Service which is the entry point for our application
+
+But on local, we need to forward port to access the application outside cluster.
+Default type of Service is clusterIP
+Like wise we have :
+>NodePort
+>ApplicationLoadBalancer
+>ClusterIP (Default)
+>External
+
+k port-forward service/ngnix-service 8282:8181

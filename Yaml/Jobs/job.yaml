@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name:  job
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      name:  job-pod
+      labels:
+        app: batch-job
+    spec:
+      containers:
+      - name: batch-container
+        image: busybox
+        command: ['sh','-c','echo Hello from Job && sleep 10' ]
+      restartPolicy: Never
