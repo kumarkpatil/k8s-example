@@ -1,0 +1,9 @@
+kind: Role
+apiVersion:  rbac.authorization.k8s.io/v1
+metadata:
+  name:  devops-grp
+  namespace: role-grp
+rules:
+  - apiGroups: ["", "apps", "rbac.authorization.k8s.io", "batch"] # blank means workload like deployment, pods etc
+    resources: ["deployment", "pods"]
+    verbs: ["get", "apply", "delete", "watch", "create", "patch"]

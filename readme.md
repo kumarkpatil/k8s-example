@@ -98,9 +98,26 @@ In order to access the application from user perspective we can crete Service wh
 But on local, we need to forward port to access the application outside cluster.
 Default type of Service is clusterIP
 Like wise we have :
->NodePort
->ApplicationLoadBalancer
->ClusterIP (Default)
->External
 
-k port-forward service/ngnix-service 8282:8181
+```bash
+NodePort
+ApplicationLoadBalancer
+ClusterIP (Default)
+External
+```
+
+>k port-forward service/ngnix-service 8282:8181
+
+
+## RBAC
+
+Role based access controlle
+
+>kubectl auth whoami
+>kubectl auth can-i get pods
+
+check the ServiceAccount permission
+> kubectlauth can-i get pods -n namespace --as=role-user
+
+After Role binding we can check if the user/SA has the permission
+>kubectl auth can-i get pods --as=devops-usr -n apcache
