@@ -121,3 +121,12 @@ check the ServiceAccount permission
 
 After Role binding we can check if the user/SA has the permission
 >kubectl auth can-i get pods --as=devops-usr -n apcache
+
+
+
+## InitContainer & SideCar Container
+
+Init contianer used to configure something which is required to run the main container
+SideCar container same as main container but this is just helper to support the main container
+
+ex: vault-agent : to connect to vault and get the secret 
